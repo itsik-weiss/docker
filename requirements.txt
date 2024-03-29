@@ -2,4 +2,4 @@
 flask
 beautifulsoup4
 google
-flask googlesearch-python
+googlesearch-python
