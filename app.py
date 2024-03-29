@@ -1,7 +1,5 @@
-from flask import Flask, redirect, url_for, render_template, request
-import subprocess
-import json
-from flask_restful import Api, Resource
+from flask import Flask
+from flask_restful import Api
 from Resources.res import *
 
 app = Flask(__name__, template_folder='templates')
