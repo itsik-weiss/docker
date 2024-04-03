@@ -12,7 +12,8 @@ def request_validation(data, *keys):
 
 class Home(Resource):
     def get(self):
-        return render_template("index.html")
+        # return render_template("index.html")
+        return {"message: ": "David Yashenko"}
 
 
 class Check(Resource):
