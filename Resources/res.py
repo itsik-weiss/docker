@@ -1,7 +1,7 @@
 import subprocess
 from flask_restful import Resource
 from flask import redirect, render_template, request, url_for
-
+from bs4 import BeautifulSoup as bs
 
 def request_validation(data, *keys):
     for key in keys:

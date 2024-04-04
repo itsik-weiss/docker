@@ -3,3 +3,4 @@ flask
 beautifulsoup4
 google
 googlesearch-python
+flask-restful
