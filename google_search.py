@@ -14,7 +14,3 @@ def process_name(name):
     except Exception as e:
         print(f"An error occurred: {e}")
     return matching_urls
-
-# if __name__ == "__main__":
-#     query = "John Doe" 
-#     print(process_name(query))
