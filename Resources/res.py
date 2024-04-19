@@ -1,6 +1,8 @@
 import subprocess
+import google_search
 from flask_restful import Resource
 from flask import redirect, render_template, request, url_for
+from bs4 import BeautifulSoup as bs
 
 
 def request_validation(data, *keys):
@@ -12,17 +14,17 @@ def request_validation(data, *keys):
 
 class Home(Resource):
     def get(self):
-        # return render_template("index.html")
-        return {"message: ": "David Yashenko"}
+        return render_template("index.html")
+        
 
 
 class Check(Resource):
     def post(self):
-        if request.method == "POST":
-            user = request.form["nm"]
-            return redirect(url_for("user", usr=user))
-        else:
-            return render_template("check.html")
+        user = request.json["nm"]
+        # print(f' this user is : {user["nm"]}') For Testing
+        result = google_search.process_name(user)
+        return {"result": result} 
+  
 
     def get(self):
         pass
