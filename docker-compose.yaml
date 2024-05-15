@@ -1,0 +1,22 @@
+version: '3' # specify docker-compose version
+
+services:
+  backend: # name of the first service
+    build: ./ # specify the directory of the Dockerfile
+    ports:
+      - "5001:5001" ## maps port 3000 on localhost to 3000 in container
+    networks:
+      - mynetwork
+
+  frontend: # name of the second service
+    build:  # specify the directory of the Dockerfile
+      context: ./social-finder
+      dockerfile: Dockerfile
+    env_file: ./variable.env
+    ports:
+      - "3000:3000" # maps port 3000 on localhost to 3000 in container
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
