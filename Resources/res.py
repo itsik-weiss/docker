@@ -23,11 +23,14 @@ class Check(Resource):
     def post(self):
         try:
             data = request.json
+            print(f"Received data: {data}")  # Log the received data
             if isinstance(data, dict) and "nm" in data:
                 user = data["nm"]
+                print(f"Processing name: {user}")  # Log the processing name
                 result = google_search.process_name(user)
                 return {"result": result}
             else:
+                print("Invalid request data format")
                 return {"error": "Invalid request data format"}, 400
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -40,6 +43,7 @@ class Check(Resource):
 class User(Resource):
     def get(self, usr):
         query = f"{usr} LinkedIn {usr} Facebook {usr} Instagram"
+        print(f"Querying social media for: {usr}")  # Log the query
         process = subprocess.run(
             ['python3', 'google_search.py', query], capture_output=True, text=True)
         urls = process.stdout.splitlines()
