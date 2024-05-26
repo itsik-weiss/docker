@@ -1,16 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const getIPAddress = async () => {
-  try {
-    const response = await axios.get('http://169.254.169.254/latest/meta-data/public-ipv4');
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching IP address:", error);
-    return null;
-  }
-};
-
 function Check() {
   const [name, setName] = useState("");
   const [result, setResult] = useState([]);
@@ -19,9 +9,11 @@ function Check() {
 
   useEffect(() => {
     const fetchIPAddress = async () => {
-      const ip = await getIPAddress();
+      const ip = process.env.REACT_APP_HOST_IP;
       if (ip) {
         setApiURL(`http://${ip}:5001/api`);
+      } else {
+        console.error("No IP address found in environment variable REACT_APP_HOST_IP");
       }
     };
     fetchIPAddress();

@@ -14,10 +14,11 @@ services:
     build:
       context: ./social-finder
     container_name: frontend
-    environment:
-      - REACT_APP_HOST
+    env_file: ./variable.env
     ports:
       - "3000:3000"
+    environment:
+      - REACT_APP_HOST_IP=${HOST_IP}
     networks:
       - project_network
 
