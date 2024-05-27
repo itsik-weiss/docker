@@ -33,7 +33,6 @@ function Check() {
         headers: {
           'Content-Type': 'application/json'
         },
-        timeout: 5000  // Set timeout to 5000ms (5 seconds)
       });
       console.log("Response:", response);
       setResult(response.data.result);
