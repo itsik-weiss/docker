@@ -11,7 +11,7 @@ function Check() {
     const fetchIPAddress = async () => {
       const ip = process.env.REACT_APP_HOST_IP;
       if (ip) {
-        setApiURL(`http://${ip}:5001/api`);
+        setApiURL(`http://backend-service:5001/api`);
       } else {
         console.error("No IP address found in environment variable REACT_APP_HOST_IP");
       }
