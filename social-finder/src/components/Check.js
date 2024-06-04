@@ -7,17 +7,17 @@ function Check() {
   const [error, setError] = useState(null);
   const [apiURL, setApiURL] = useState("");
 
-  useEffect(() => {
-    const fetchIPAddress = async () => {
-      const ip = process.env.REACT_APP_HOST_IP;
-      if (ip) {
-        setApiURL(`http://backend-service:5001/api`);
-      } else {
-        console.error("No IP address found in environment variable REACT_APP_HOST_IP");
-      }
-    };
-    fetchIPAddress();
-  }, []);
+  // useEffect(() => {
+  //   const fetchIPAddress = async () => {
+  //     //const ip = process.env.REACT_APP_HOST_IP;
+  //     if (ip) {
+  //       setApiURL(`http://backend-service:5001/api`);
+  //     } else {
+  //       console.error("No IP address found in environment variable REACT_APP_HOST_IP");
+  //     }
+  //   };
+  //   fetchIPAddress();
+  // }, []);
 
   const handleInputChange = (event) => {
     setName(event.target.value);
@@ -25,9 +25,6 @@ function Check() {
 
   const handleSearch = async () => {
     try {
-      if (!apiURL) {
-        throw new Error("API URL is not set");
-      }
       console.log("API POST:", `${apiURL}/check`);
       const response = await axios.post('http://backend-service:5001/api/check', { nm: name }, {
         headers: {
