@@ -12,7 +12,7 @@ function Check() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('http://backend-service:5001/api/check', { nm: name }, {
+      const response = await axios.post('backend-service:5001/api/check', { nm: name }, {
         headers: {
           'Content-Type': 'application/json'
         },
