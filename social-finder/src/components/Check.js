@@ -25,7 +25,6 @@ function Check() {
 
   const handleSearch = async () => {
     try {
-      console.log("API POST:", `${apiURL}/check`);
       const response = await axios.post('http://backend-service:5001/api/check', { nm: name }, {
         headers: {
           'Content-Type': 'application/json'
