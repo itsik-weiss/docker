@@ -29,7 +29,7 @@ function Check() {
         throw new Error("API URL is not set");
       }
       console.log("API POST:", `${apiURL}/check`);
-      const response = await axios.post(`${apiURL}/check`, { nm: name }, {
+      const response = await axios.post('http://backend-service:5001/api/check', { nm: name }, {
         headers: {
           'Content-Type': 'application/json'
         },
