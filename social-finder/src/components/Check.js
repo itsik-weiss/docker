@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://backend.example.com/api';
+const API_URL = 'http://35.190.26.8/api';
 
 function Check() {
   const [name, setName] = useState("");
