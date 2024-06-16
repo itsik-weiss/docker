@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://backend.example.com/api';
+
 function Check() {
   const [name, setName] = useState("");
   const [result, setResult] = useState([]);
@@ -12,7 +14,7 @@ function Check() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post(`http://backend.example.com/api/check`, { nm: name }, {
+      const response = await axios.post(`${API_URL}/check`, { nm: name }, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -40,12 +42,26 @@ function Check() {
     }
   };
 
+  const handleTest = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/check`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      console.log("Test Response:", response);
+    } catch (error) {
+      console.log("Test Error:", error);
+    }
+  };
+
   return (
     <div>
       <h1>Check</h1>
       <div>
         <input type="text" value={name} onChange={handleInputChange} />
         <button onClick={handleSearch}>Search</button>
+        <button onClick={handleTest}>Test Backend</button>
       </div>
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       <ul>
