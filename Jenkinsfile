@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                sh 'git pull'
+                sh 'git pull itsik-dev-k8s'
                 sh 'pwd'
             }
         }
