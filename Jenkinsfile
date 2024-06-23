@@ -23,7 +23,7 @@ pipeline {
         }
         stage('A') {
             steps {
-                echo '========executing A========'
+                sh 'docker build -t  $(CONTAINER_NAME_BACKEND) .'
             }
             post {
                 always {
