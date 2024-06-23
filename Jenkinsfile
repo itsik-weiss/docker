@@ -23,10 +23,7 @@ pipeline {
         }
         stage('build backend') {
             steps {
-                sh 'sudo usermod -aG docker jenkins'
-                sh 'sudo systemctl restart jenkins'
                 sh 'docker ps'
-                sh 'sudo chmod 777 /var/run/docker.sock'
                 sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
             post {
