@@ -21,7 +21,7 @@ pipeline {
                 sh 'find .'
             }
         }
-        stage('A') {
+        stage('build backend') {
             steps {
                 sh 'docker build -t  $(CONTAINER_NAME_BACKEND) .'
             }
