@@ -25,7 +25,7 @@ pipeline {
         stage('build backend') {
             steps {
                 sh 'docker ps'
-                sh 'docker build -t ${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_TAG} .'
+                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
         }
          stage('Login to DockerHub'){
