@@ -7,7 +7,7 @@ pipeline {
         BACKEND_IMAGE_NAME='project-backend-k8s'
         BACKEND_IMAGE_TAG="v1.${BUILD_NUMBER}"
         CONTAINER_NAME_FRONTEND='frontend'
-        CONTAINER_NAME_BACKEND='backend'
+        CONTAINER_NAME_BACKEND='project-backend-k8s'
         REGISTRY='DockerHub'
         ACCOUNT_NAME='itsikweiss1020'
         NEW_FRONTEND_NAME=''
@@ -25,7 +25,7 @@ pipeline {
         stage('build backend') {
             steps {
                 sh 'docker ps'
-                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
+                sh 'docker build -t ${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_TAG} .'
             }
         }
          stage('Login to DockerHub'){
