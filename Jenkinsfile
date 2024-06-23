@@ -16,9 +16,8 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                //sh 'git clone ${REPO_URL}'
+                sh 'git pull'
                 sh 'pwd'
-                sh 'find .'
             }
         }
         stage('build backend') {
