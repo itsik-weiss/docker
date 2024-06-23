@@ -29,8 +29,8 @@ pipeline {
             }
         }
          stage('Login to DockerHub'){
-            sh '${DOCKERHUB_CREDENIALS}'
-            sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u itsikweiss1020 --password-stdin'
+            sh '${DOCKERHUB_CREDENTIALS}'
+            sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u $ACCOUNT_NAME --password-stdin'
         }
         stage('push backend'){
 
