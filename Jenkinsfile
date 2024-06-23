@@ -12,6 +12,7 @@ pipeline {
         ACCOUNT_NAME='itsikweiss1020'
         NEW_FRONTEND_NAME=''
         NEW_BACKEND_NAME=''
+        DOCKERHUB_CREDENTIALS = credentials('DockerCred')
     }
     stages {
         stage('clone') {
@@ -26,17 +27,13 @@ pipeline {
                 sh 'docker ps'
                 sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
-            post {
-                always {
-                    echo '========always========'
-                }
-                success {
-                    echo '========A executed successfully========'
-                }
-                failure {
-                    echo '========A execution failed========'
-                }
-            }
+        }
+         stage('Login to DockerHub'){
+            sh '${DOCKERHUB_CREDENIALS}'
+            sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u itsikweiss1020 --password-stdin'
+        }
+        stage('push backend'){
+
         }
     }
     post {
