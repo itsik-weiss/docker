@@ -1,34 +1,52 @@
 pipeline{
     agent any
+    environment{
+        REPO_URL=''
+        FRONTEND_IMAGE_NAME='project-frontend-k8s'
+        FRONTEND_IMAGE_TAG='v1.${BUILD_NUMBER}'
+        BACKEND_IMAGE_NAME='project-backend-k8s'
+        BACKEND_IMAGE_TAG='v1.${BUILD_NUMBER}'
+        CONTAINER_NAME='frontend'
+        CONTAINER_NAME='backend'
+        REGISTRY='DockerHub'
+        ACCOUNT_NAME='itsikweiss1020'
+        NEW_FRONTEND_NAME=
+        NEW_BACKEND_NAME=
+    }
     stages{
-        stage('checkout'){
+        stage("clone"){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/itsik-dev-k8s']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/V1Su4L/DevSecOps14FinalProject.git']]])
+                //sh 'gig clone '
+                sh "pwd"
+                sh 'fing .'
             }
         }
-        stage('build'){
+        stage("A"){
             steps{
-               sh 'docker build -t backend .'
+                echo "========executing A========"
             }
-        }
-        stage('test'){
-            steps{
-                timeout(time: 3,unit: 'SECONDS'){
-                    sh 'sleep 1'
+            post{
+                always{
+                    echo "========always========"
                 }
-
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
             }
         }
-
     }
     post{
-        aborted{
-            sh 'echo please give me more time'
+        always{
+            echo "========always========"
         }
         success{
+            echo "========pipeline executed successfully ========"
         }
         failure{
-            sh 'echo die'
+            echo "========pipeline execution failed========"
         }
     }
 }
