@@ -25,22 +25,21 @@ pipeline {
         stage('build backend') {
             steps {
                 sh 'docker ps'
-                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
+                sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
         }
-         stage('Login to DockerHub'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'DockerCred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]){
+        stage('Login to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DockerCred', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
                     sh 'echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin'
                 }
             }
         }
-        stage('push backend'){
-            steps{
+        stage('push backend') {
+            steps {
                 sh 'docker images'
                 sh 'docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG}'
             }
-
         }
     }
     post {
