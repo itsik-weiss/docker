@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REPO_URL=''
+        REPO_URL='https://github.com/V1Su4L/DevSecOps14FinalProject.git'
         FRONTEND_IMAGE_NAME='project-frontend-k8s'
         FRONTEND_IMAGE_TAG="v1.${BUILD_NUMBER}"
         BACKEND_IMAGE_NAME='project-backend-k8s'
@@ -16,13 +16,14 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                sh 'git pull'
+                sh 'git checkout itsik-dev-k8s || git checkout -b itsik-dev-k8s'
+                sh 'git pull origin itsik-dev-k8s'
                 sh 'pwd'
             }
         }
         stage('build backend') {
             steps {
-                sh 'docker build -t  $(CONTAINER_NAME_BACKEND) .'
+                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
             post {
                 always {
