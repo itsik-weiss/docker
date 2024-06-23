@@ -23,7 +23,7 @@ pipeline {
         }
         stage('build backend') {
             steps {
-                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
+                sh 'sudo docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
             post {
                 always {
