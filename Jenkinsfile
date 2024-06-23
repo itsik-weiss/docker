@@ -23,7 +23,8 @@ pipeline {
         }
         stage('build backend') {
             steps {
-                sh 'sudo docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
+                sh 'chmod 777 /var/run/docker.sock'
+                sh 'docker build -t ${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
             }
             post {
                 always {
