@@ -37,7 +37,7 @@ pipeline {
         }
         stage('push backend'){
             steps{
-                sh 'echo push backend'
+                sh 'docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG}'
             }
 
         }
