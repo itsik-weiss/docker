@@ -37,6 +37,9 @@ pipeline {
             }
         }
         stage('push backend'){
+            steps{
+                sh 'echo push backend'
+            }
 
         }
     }
