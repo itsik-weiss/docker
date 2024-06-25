@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import './Check.css';
 
 // Use the IP address of your Ingress
 const API_URL = 'http://104.197.99.174:5001/api';
@@ -45,16 +46,16 @@ function Check() {
 
 
   return (
-    <div>
-      <h1>Check</h1>
-      <div>
-        <input type="text" value={name} onChange={handleInputChange} />
-        <button onClick={handleSearch}>Search</button>
+    <div className="container">
+      <h1 className="title">Check</h1>
+      <div className="input-container">
+        <input type="text" value={name} onChange={handleInputChange} className="input" />
+        <button onClick={handleSearch} className="button">Search</button>
       </div>
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      <ul>
+      {error && <p className="error">Error: {error}</p>}
+      <ul className="result-list">
         {result.map((url, index) => (
-          <li key={index}>{url}</li>
+          <li key={index} className="result-item">{url}</li>
         ))}
       </ul>
     </div>
