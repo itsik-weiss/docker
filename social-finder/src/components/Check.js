@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 
 // Use the IP address of your Ingress
-const API_URL = 'http://34.118.238.67/api';
+const API_URL = 'http://104.197.99.174/api';
 
 function Check() {
   const [name, setName] = useState("");
