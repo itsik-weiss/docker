@@ -43,18 +43,6 @@ function Check() {
     }
   };
 
-  const handleTest = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/check`, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      console.log("Test Response:", response);
-    } catch (error) {
-      console.log("Test Error:", error);
-    }
-  };
 
   return (
     <div>
@@ -62,7 +50,6 @@ function Check() {
       <div>
         <input type="text" value={name} onChange={handleInputChange} />
         <button onClick={handleSearch}>Search</button>
-        <button onClick={handleTest}>Test Backend</button>
       </div>
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       <ul>
