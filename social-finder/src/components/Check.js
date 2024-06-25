@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import './Check.css';
 
-// Use the IP address of your Ingress
 const API_URL = 'http://104.197.99.174:5001/api';
 
 function Check() {
@@ -47,9 +46,10 @@ function Check() {
 
   return (
     <div className="container">
-      <h1 className="title">Check</h1>
+      <h1 className="title">Social Media Search</h1>
+      <p className="description">Enter a name to search for profiles on various social media platforms.</p>
       <div className="input-container">
-        <input type="text" value={name} onChange={handleInputChange} className="input" />
+        <input type="text" value={name} onChange={handleInputChange} className="input" placeholder="Enter name" />
         <button onClick={handleSearch} className="button">Search</button>
       </div>
       {error && <p className="error">Error: {error}</p>}
