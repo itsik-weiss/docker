@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./
+    container_name: backend
+    ports:
+      - "5001:5001"
+    networks:
+      - project_network
+
+  frontend:
+    build:
+      context: ./social-finder
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - project_network
+
+networks:
+  project_network:
