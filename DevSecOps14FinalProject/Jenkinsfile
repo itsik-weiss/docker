@@ -24,7 +24,9 @@ pipeline {
                 sh 'pwd'
                 sh 'docker ps'
                 sh 'pwd'
-                sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest .'
+                dir('docker/DevSecOps14'){
+                    sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest .'
+                }
             }
         }
         stage('Login to DockerHub') {
@@ -39,11 +41,13 @@ pipeline {
                 script {
                     sh 'pwd'
                     sh 'docker images'
-                    def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest", returnStatus: true)
-                    if (pushResult != 0) {
-                        error "Docker push failed"
-                    } else {
-                        echo "Docker image pushed successfully"
+                    dir('docker/DevSecOps14'){
+                        def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest", returnStatus: true)
+                        if (pushResult != 0) {
+                            error "Docker push failed"
+                        } else {
+                            echo "Docker image pushed successfully"
+                        }
                     }
                 }
             }
