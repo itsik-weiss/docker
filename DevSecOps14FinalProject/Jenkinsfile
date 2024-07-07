@@ -24,7 +24,7 @@ pipeline {
                 sh 'pwd'
                 sh 'docker ps'
                 sh 'pwd'
-                dir('docker/DevSecOps14'){
+                dir('DevSecOps14'){
                     sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest .'
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     sh 'pwd'
                     sh 'docker images'
-                    dir('docker/DevSecOps14'){
+                    dir('DevSecOps14'){
                         def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest", returnStatus: true)
                         if (pushResult != 0) {
                             error "Docker push failed"
