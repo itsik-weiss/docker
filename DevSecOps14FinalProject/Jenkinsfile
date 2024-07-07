@@ -17,15 +17,14 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                sh 'git checkout itsik-dev-k8s || git checkout -b itsik-dev-k8s'
-                sh 'git pull origin itsik-dev-k8s'
                 sh 'pwd'
             }
         }
         stage('build backend') {
             steps {
+                sh 'pwd'
                 sh 'docker ps'
-                sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG} .'
+                sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest .'
             }
         }
         stage('Login to DockerHub') {
@@ -38,9 +37,25 @@ pipeline {
         stage('push backend') {
             steps {
                 sh 'docker images'
-                sh 'docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:${BACKEND_IMAGE_TAG}'
+                def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest", returnStatus: true)
+                    if (pushResult != 0) {
+                        error "Docker push failed"
+                    } else {
+                        echo "Docker image pushed successfully"
+                    }
             }
         }
+//         stage('Deploy Backend') {
+//             steps {
+//                 script {
+//                     dir(){
+//                     sh 'kubectl apply -f backend-deployment.yaml'
+//                     sh 'kubectl apply -f backend-service.yaml'
+//                     }
+//                 }
+            }
+        }
+
     }
     post {
         always {

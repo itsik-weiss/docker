@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./
+      context: ..
     container_name: backend
     ports:
       - "5001:5001"
@@ -12,7 +12,7 @@ services:
 
   frontend:
     build:
-      context: ./social-finder
+      context: ../social-finder
     container_name: frontend
     ports:
       - "3000:3000"
