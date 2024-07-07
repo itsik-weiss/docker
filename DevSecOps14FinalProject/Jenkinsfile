@@ -53,8 +53,8 @@ pipeline {
 //                     sh 'kubectl apply -f backend-service.yaml'
 //                     }
 //                 }
-            }
-        }
+//            }
+//        }
 
     }
     post {
