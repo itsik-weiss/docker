@@ -25,7 +25,7 @@ pipeline {
                 sh 'docker ps'
                 sh 'pwd'
                 dir('DevSecOps14'){
-                    sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest -f Dockerfile . .'
+                    sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest -f Dockerfile .'
                 }
             }
         }
