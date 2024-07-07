@@ -36,6 +36,7 @@ pipeline {
         stage('push backend') {
             steps {
                 script {
+                    sh 'pwd'
                     sh 'docker images'
                     def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_BACKEND}:latest", returnStatus: true)
                     if (pushResult != 0) {
