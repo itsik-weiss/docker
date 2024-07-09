@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'k8s-agent' // ודא ש-agent זה מותקן בו kubectl
+        label 'k8s-agent' 
     }
     environment {
         FRONTEND_IMAGE_NAME='project-frontend-k8s'
