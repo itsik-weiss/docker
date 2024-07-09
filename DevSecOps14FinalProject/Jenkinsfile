@@ -55,7 +55,7 @@ pipeline {
         stage('Deploy Backend') {
             steps {
                 script {
-                    dir(){
+                    dir('k8s'){
                         sh 'kubectl apply -f backend-deployment.yaml'
                         sh 'kubectl apply -f backend-service.yaml'
                     }
@@ -65,24 +65,30 @@ pipeline {
        stage('Get Backend IP') {
            steps {
                script {
+                   echo 'Getting Backend IP...'
                    BACKEND_IP = sh(script: "kubectl get service backend-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
                    writeFile file: 'backend_ip.txt', text: BACKEND_IP
+                   echo "Backend IP is ${BACKEND_IP}"
                }
            }
        }
        stage('Create ConfigMap') {
            steps {
                script {
+                   echo 'Creating ConfigMap...'
                    sh """
                    kubectl create configmap frontend-config --from-literal=.env="REACT_APP_BACKEND_URL=http://${BACKEND_IP}:5001/api" --dry-run=client -o yaml | kubectl apply -f -
                    """
+                   echo 'ConfigMap created.'
                }
            }
        }
        stage('Build Frontend') {
            steps {
                dir('frontend') {
+                   echo 'Building Frontend...'
                    sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_FRONTEND}:latest -f Dockerfile .'
+                   echo 'Frontend built.'
                }
            }
        }
@@ -90,6 +96,7 @@ pipeline {
            steps {
                script {
                    dir('frontend') {
+                       echo 'Pushing Frontend...'
                        def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_FRONTEND}:latest", returnStatus: true)
                        if (pushResult != 0) {
                            error "Docker push failed"
@@ -103,18 +110,21 @@ pipeline {
        stage('Deploy Frontend') {
            steps {
                script {
-                   dir(){
+                   echo 'Deploying Frontend...'
+                   dir('k8s'){
                        sh 'kubectl apply -f frontend-deployment.yaml'
                        sh 'kubectl apply -f frontend-service.yaml'
                    }
+                   echo 'Frontend deployed.'
                }
            }
        }
        stage('Get Frontend IP') {
            steps {
                script {
+                   echo 'Getting Frontend IP...'
                    FRONTEND_IP = sh(script: "kubectl get service frontend-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
-                   echo "Frontend IP: ${FRONTEND_IP}"
+                   echo "Frontend IP is ${FRONTEND_IP}"
                }
            }
        }
