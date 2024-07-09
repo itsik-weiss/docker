@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'k8s-agent'
+        label 'k8s-agent' // ודא ש-agent זה מותקן בו kubectl
     }
     environment {
         FRONTEND_IMAGE_NAME='project-frontend-k8s'
@@ -79,4 +79,71 @@ pipeline {
                script {
                    echo 'Creating ConfigMap...'
                    sh """
-                   kubectl create configmap frontend-config --from-literal=.env="REACT_APP_BACKEND_URL=http://${BACK
+                   kubectl create configmap frontend-config --from-literal=.env="REACT_APP_BACKEND_URL=http://${BACKEND_IP}:5001/api" --dry-run=client -o yaml | kubectl apply -f -
+                   """
+                   echo 'ConfigMap created.'
+               }
+           }
+       }
+       stage('Build Frontend') {
+           steps {
+               dir('frontend') {
+                   echo 'Building Frontend...'
+                   sh 'docker build -t ${ACCOUNT_NAME}/${CONTAINER_NAME_FRONTEND}:latest -f Dockerfile .'
+                   echo 'Frontend built.'
+               }
+           }
+       }
+       stage('Push Frontend') {
+           steps {
+               script {
+                   dir('frontend') {
+                       echo 'Pushing Frontend...'
+                       def pushResult = sh(script: "docker push ${ACCOUNT_NAME}/${CONTAINER_NAME_FRONTEND}:latest", returnStatus: true)
+                       if (pushResult != 0) {
+                           error "Docker push failed"
+                       } else {
+                           echo "Docker image pushed successfully"
+                       }
+                   }
+               }
+           }
+       }
+       stage('Deploy Frontend') {
+           steps {
+               script {
+                   echo 'Deploying Frontend...'
+                   dir('k8s'){
+                       sh 'kubectl apply -f frontend-deployment.yaml'
+                       sh 'kubectl apply -f frontend-service.yaml'
+                   }
+                   echo 'Frontend deployed.'
+               }
+           }
+       }
+       stage('Get Frontend IP') {
+           steps {
+               script {
+                   echo 'Getting Frontend IP...'
+                   FRONTEND_IP = sh(script: "kubectl get service frontend-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
+                   echo "Frontend IP is ${FRONTEND_IP}"
+               }
+           }
+       }
+    }
+    post {
+        always {
+            echo '========always========'
+        }
+        success {
+            script {
+                echo '========pipeline executed successfully ========'
+                FRONTEND_IP = sh(script: "kubectl get service frontend-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'", returnStdout: true).trim()
+                echo "Frontend IP: ${FRONTEND_IP}"
+            }
+        }
+        failure {
+            echo '========pipeline execution failed========'
+        }
+    }
+}
