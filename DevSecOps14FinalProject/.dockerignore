@@ -1,0 +1,5 @@
+social-finder/
+k8s/backend-deployment.yaml
+backend-service.yaml
+k8s/frontend-deployment.yaml
+frontend-service.yaml
