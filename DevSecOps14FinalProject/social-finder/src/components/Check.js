@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import './Check.css';
 
-const API_URL = 'http://34.45.58.51:5001/api';
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function Check() {
   const [name, setName] = useState("");
